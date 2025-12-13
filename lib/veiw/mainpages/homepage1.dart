@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_6/veiw/mainpages/Azkarpage.dart';
 import 'package:flutter_application_6/veiw/mainpages/tasbih.dart';
 import 'package:flutter_application_6/veiw/prayertime/PrayerTimesView.dart';
+import 'package:flutter_application_6/features/settings/settings_page.dart';
 
 import 'package:flutter_islamic_icons/flutter_islamic_icons.dart';
 
@@ -23,17 +24,38 @@ class _HomePgeState extends State<HomePge> {
     void onTapIcon(int index) {
       _controller.animateToPage(index,
           duration: Duration(microseconds: 300), curve: Curves.easeIn);
-      // if (index == 0) {
-      //   appBarTitle = 'مواقيت الصلاة';
-      // } else if (index == 1) {
-      //   appBarTitle = "الأذكار";
-      // } else if (index == 2) {
-      //   appBarTitle = "تسبيح";
-      // }
     }
 
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey[900],
+        elevation: 0,
+        title: Text(
+          _getAppBarTitle(),
+          style: const TextStyle(
+            fontFamily: 'Tajawal',
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: SettingsPage(),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: PageView(
         controller: _controller,
         onPageChanged: (value) {
@@ -53,11 +75,11 @@ class _HomePgeState extends State<HomePge> {
         selectedItemColor: Colors.white,
         selectedLabelStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.green, // Change the selected label color here
+          color: Colors.green,
         ),
         elevation: 0,
         backgroundColor: Colors.blueGrey[800],
-        currentIndex: currentpage, // Use the currentpage variable here
+        currentIndex: currentpage,
         onTap: onTapIcon,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -84,5 +106,18 @@ class _HomePgeState extends State<HomePge> {
         ],
       ),
     );
+  }
+
+  String _getAppBarTitle() {
+    switch (currentpage) {
+      case 0:
+        return 'مواقيت الصلاة';
+      case 1:
+        return 'الأذكار';
+      case 2:
+        return 'التسبيح';
+      default:
+        return 'أذكاري';
+    }
   }
 }

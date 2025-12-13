@@ -1,42 +1,59 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_application_6/veiw/mainpages/homepage1.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_application_6/core/services/storage_service.dart';
+import 'package:flutter_application_6/core/services/notification_service.dart';
+import 'package:flutter_application_6/core/services/audio_service.dart';
+import 'package:flutter_application_6/core/services/background_service.dart';
+import 'package:flutter_application_6/veiw/mainpages/homepage1.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize services
+  await StorageService.init();
+  await NotificationService.init();
+  await NotificationService.requestPermissions();
+  await AudioService.init();
+  await BackgroundService.init();
+
+  // Register background tasks
+  await BackgroundService.registerPrayerTimesSync();
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('ar', 'AE'), // Arabic
+      supportedLocales: const [
+        Locale('ar', 'AE'),
       ],
       debugShowCheckedModeBanner: false,
-      title: 'Tzirah',
+      title: 'أذكاري',
       theme: ThemeData(
         fontFamily: "Tajawal",
-        backgroundColor: Colors.blueGrey[900],
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+        ),
       ),
-      // home: MyHomePage(),
-      // home: azkarpagen(),
-      // home: MornAzkar(),
-      home: Directionality(
-        // add this
-        textDirection: TextDirection.rtl, // set this property
-        // child: HomePge(),
+      home: const Directionality(
+        textDirection: TextDirection.rtl,
         child: HomePge(),
       ),
     );

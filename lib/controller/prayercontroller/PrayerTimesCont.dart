@@ -1,13 +1,11 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter_application_6/model/prayermodel/PrayerTimes.dart';
 import 'package:geolocator/geolocator.dart';
-
-import 'package:http/http.dart' as http;
 
 class PrayerTimesController {
   static double? pLat;
   static double? pLong;
+  final Dio _dio = Dio();
 
   Future<AzkarApp> fetchPrayerTimesByLocation() async {
     final position = await Geolocator.getCurrentPosition(
@@ -18,16 +16,16 @@ class PrayerTimesController {
 
     String date = DateTime.now().toIso8601String();
 
-    final response = await http.get(
-      Uri.parse(
-          "http://api.aladhan.com/v1/timings/$date?latitude=$pLat&longitude=$pLong"),
+    final response = await _dio.get(
+      "https://api.aladhan.com/v1/timings/$date",
+      queryParameters: {
+        'latitude': pLat,
+        'longitude': pLong,
+      },
     );
 
-    // print('Response Status Code: ${response.statusCode}');
-    // print('Response Body: ${response.body}');
-
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = response.data;
       return AzkarApp.fromJson(data);
     } else {
       throw Exception('Failed to load prayer times');

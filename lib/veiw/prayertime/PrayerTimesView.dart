@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_6/controller/prayercontroller/PrayerTimesCont.dart';
@@ -62,7 +62,15 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
 
   Future<void> checkInternetConnectivity() async {
     var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    // Check if no internet (works with both old and new connectivity_plus versions)
+    bool hasNoInternet = false;
+    if (connectivityResult is List) {
+      hasNoInternet =
+          (connectivityResult as List).contains(ConnectivityResult.none);
+    } else {
+      hasNoInternet = connectivityResult == ConnectivityResult.none;
+    }
+    if (hasNoInternet) {
       // No internet connection, show a dialog
       showNoInternetDialog();
     }

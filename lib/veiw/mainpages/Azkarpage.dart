@@ -1,12 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/veiw/akarespages/ad3ia.dart';
-import 'package:flutter_application_6/veiw/akarespages/evining.dart';
-import 'package:flutter_application_6/veiw/akarespages/morning.dart';
-import 'package:flutter_application_6/veiw/akarespages/prayer.dart';
-import 'package:flutter_application_6/veiw/akarespages/roqia.dart';
-import 'package:flutter_application_6/veiw/akarespages/sleep.dart';
+import 'package:flutter_application_6/features/azkar/azkar_pages.dart';
 
 class azkarpagen extends StatefulWidget {
   const azkarpagen({Key? key});
@@ -20,22 +15,6 @@ class _azkarpagenState extends State<azkarpagen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blueGrey[900],
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey[800],
-          title: Container(
-            padding: EdgeInsets.only(bottom: 10, top: 3.0),
-            child: Center(
-              child: Text(
-                "الأذكار",
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
         body: SafeArea(
           child: Center(
             child: Padding(
@@ -48,27 +27,45 @@ class _azkarpagenState extends State<azkarpagen> {
                       AzkarName: "أذكار الصباح",
                       imgpath:
                           "lib/assets/pngtree-early-morning-sun-background-template-image_161619.jpg",
-                      nextpagename: MornAzkar()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: MorningAzkarPage(),
+                      )),
                   Customlessons(
                       AzkarName: "أذكار المساء",
                       imgpath: 'lib/assets/evining.jpg',
-                      nextpagename: EviningAkar()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: EveningAzkarPage(),
+                      )),
                   Customlessons(
                       AzkarName: "أذكار الصلاة",
                       imgpath: 'lib/assets/mosque.jpg',
-                      nextpagename: Prayerazkar()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: PrayerAzkarPage(),
+                      )),
                   Customlessons(
                       AzkarName: "أذكار النوم",
                       imgpath: 'lib/assets/sleep.jpg',
-                      nextpagename: sleepAzkar()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: SleepAzkarPage(),
+                      )),
                   Customlessons(
                       AzkarName: "الرقية",
                       imgpath: 'lib/assets/roqia.jpg',
-                      nextpagename: Roqia()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: RuqyahPage(),
+                      )),
                   Customlessons(
                       AzkarName: "أدعية متنوعة",
                       imgpath: 'lib/assets/do3aa.jpg',
-                      nextpagename: Ad3ia()),
+                      nextpagename: const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: DuaPage(),
+                      )),
                 ],
               ),
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_application_6/data/models/azkar_model.dart';
+import 'package:flutter_application_6/providers/font_settings_provider.dart';
 
 /// Reusable widget for displaying azkar list
-class AzkarListWidget extends StatefulWidget {
+class AzkarListWidget extends ConsumerStatefulWidget {
   final AzkarCategory category;
   final String backgroundImage;
   final Color? backgroundColor;
@@ -16,10 +17,10 @@ class AzkarListWidget extends StatefulWidget {
   });
 
   @override
-  State<AzkarListWidget> createState() => _AzkarListWidgetState();
+  ConsumerState<AzkarListWidget> createState() => _AzkarListWidgetState();
 }
 
-class _AzkarListWidgetState extends State<AzkarListWidget> {
+class _AzkarListWidgetState extends ConsumerState<AzkarListWidget> {
   late List<int> _remainingCounts;
   late List<bool> _completed;
 
@@ -62,6 +63,8 @@ class _AzkarListWidgetState extends State<AzkarListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final fontSettings = ref.watch(fontSettingsProvider);
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -110,8 +113,8 @@ class _AzkarListWidgetState extends State<AzkarListWidget> {
                       item.text,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Tajawal',
-                        fontSize: 18,
+                        fontFamily: fontSettings.fontFamily,
+                        fontSize: fontSettings.fontSize,
                         height: 1.8,
                         color: isCompleted ? Colors.white : Colors.black87,
                       ),
@@ -133,8 +136,8 @@ class _AzkarListWidgetState extends State<AzkarListWidget> {
                           item.description!,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'Tajawal',
-                            fontSize: 14,
+                            fontFamily: fontSettings.fontFamily,
+                            fontSize: fontSettings.fontSize * 0.85,
                             color: isCompleted
                                 ? Colors.white70
                                 : Colors.teal.shade700,

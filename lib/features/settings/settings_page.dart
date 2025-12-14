@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_application_6/core/constants/app_constants.dart';
 import 'package:flutter_application_6/features/settings/adhan_selector_page.dart';
+import 'package:flutter_application_6/features/settings/font_customization_page.dart';
 import 'package:flutter_application_6/providers/settings_provider.dart';
 
 /// Settings page
@@ -83,6 +84,33 @@ class SettingsPage extends ConsumerWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AdhanSelectorPage(),
+                    ),
+                  );
+                },
+              ),
+            ]),
+
+            const SizedBox(height: 16),
+
+            // Font Customization Section
+            _buildSectionHeader('تخصيص الخط'),
+            _buildCard([
+              ListTile(
+                leading: const Icon(Icons.font_download, color: Colors.teal),
+                title: const Text(
+                  'تخصيص خط الأذكار',
+                  style: TextStyle(fontFamily: 'Tajawal', fontSize: 16),
+                ),
+                subtitle: const Text(
+                  'اختر نوع الخط وحجمه',
+                  style: TextStyle(fontFamily: 'Tajawal', fontSize: 13),
+                ),
+                trailing: const Icon(Icons.chevron_right, color: Colors.teal),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FontCustomizationPage(),
                     ),
                   );
                 },

@@ -130,8 +130,46 @@ flutter:
   fonts:
     - family: Tajawal
       fonts:
+        - asset: asstes/fonts/Tajawal-Regular.ttf
         - asset: asstes/fonts/Tajawal-Bold.ttf
+          weight: 700
         - asset: asstes/fonts/Tajawal-Medium.ttf
+          weight: 500
+        - asset: asstes/fonts/Tajawal-Light.ttf
+          weight: 300
+    
+    # Uncomment fonts below after downloading from Google Fonts
+    # Download links in asstes/fonts/README.md
+    
+    # - family: Amiri
+    #   fonts:
+    #     - asset: asstes/fonts/Amiri-Regular.ttf
+    #     - asset: asstes/fonts/Amiri-Bold.ttf
+    #       weight: 700
+    
+    # - family: Cairo
+    #   fonts:
+    #     - asset: asstes/fonts/Cairo-Regular.ttf
+    #     - asset: asstes/fonts/Cairo-Bold.ttf
+    #       weight: 700
+    
+    # - family: Scheherazade
+    #   fonts:
+    #     - asset: asstes/fonts/ScheherazadeNew-Regular.ttf
+    #     - asset: asstes/fonts/ScheherazadeNew-Bold.ttf
+    #       weight: 700
+    
+    # - family: Lateef
+    #   fonts:
+    #     - asset: asstes/fonts/Lateef-Regular.ttf
+    #     - asset: asstes/fonts/Lateef-Bold.ttf
+    #       weight: 700
+    
+    # - family: ReemKufi
+    #   fonts:
+    #     - asset: asstes/fonts/ReemKufi-Regular.ttf
+    #     - asset: asstes/fonts/ReemKufi-Bold.ttf
+    #       weight: 700
 
   #         style: italic
   #   - family: Trajan Pro

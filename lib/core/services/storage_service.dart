@@ -95,6 +95,26 @@ class StorageService {
     await _settings.put('evening_azkar_reminder', enabled);
   }
 
+  /// Get azkar font family
+  static String getAzkarFontFamily() {
+    return _settings.get('azkar_font_family', defaultValue: 'Tajawal');
+  }
+
+  /// Set azkar font family
+  static Future<void> setAzkarFontFamily(String fontFamily) async {
+    await _settings.put('azkar_font_family', fontFamily);
+  }
+
+  /// Get azkar font size
+  static double getAzkarFontSize() {
+    return _settings.get('azkar_font_size', defaultValue: 18.0);
+  }
+
+  /// Set azkar font size
+  static Future<void> setAzkarFontSize(double fontSize) async {
+    await _settings.put('azkar_font_size', fontSize);
+  }
+
   // ==================== Cache ====================
 
   /// Cache prayer times data

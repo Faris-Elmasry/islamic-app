@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 /// Service for handling network connectivity
 class ConnectivityService {
   static final Connectivity _connectivity = Connectivity();
-  static StreamSubscription<List<ConnectivityResult>>? _subscription;
+  static StreamSubscription<ConnectivityResult>? _subscription;
 
   /// Check if device has internet connection
   static Future<bool> hasConnection() async {
@@ -13,10 +13,10 @@ class ConnectivityService {
   }
 
   /// Check connectivity result
-  static bool _isConnected(List<ConnectivityResult> result) {
-    return result.contains(ConnectivityResult.mobile) ||
-        result.contains(ConnectivityResult.wifi) ||
-        result.contains(ConnectivityResult.ethernet);
+  static bool _isConnected(ConnectivityResult result) {
+    return result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.ethernet;
   }
 
   /// Listen to connectivity changes

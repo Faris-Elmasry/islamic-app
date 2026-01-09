@@ -141,6 +141,7 @@ class HijriDate {
   final String month;
   final String year;
   final HijriMonth monthInfo;
+  final String weekday;
   final String format;
 
   HijriDate({
@@ -149,6 +150,7 @@ class HijriDate {
     required this.month,
     required this.year,
     required this.monthInfo,
+    required this.weekday,
     required this.format,
   });
 
@@ -159,8 +161,23 @@ class HijriDate {
       month: json['month']?['number']?.toString() ?? '',
       year: json['year'] ?? '',
       monthInfo: HijriMonth.fromJson(json['month'] ?? {}),
+      weekday: json['weekday']?['ar'] ??
+          _getArabicWeekday(json['weekday']?['en'] ?? ''),
       format: json['format'] ?? '',
     );
+  }
+
+  static String _getArabicWeekday(String en) {
+    const weekdays = {
+      'Saturday': 'السبت',
+      'Sunday': 'الأحد',
+      'Monday': 'الإثنين',
+      'Tuesday': 'الثلاثاء',
+      'Wednesday': 'الأربعاء',
+      'Thursday': 'الخميس',
+      'Friday': 'الجمعة',
+    };
+    return weekdays[en] ?? en;
   }
 
   Map<String, dynamic> toJson() {
@@ -169,6 +186,7 @@ class HijriDate {
       'day': day,
       'month': monthInfo.toJson(),
       'year': year,
+      'weekday': {'ar': weekday},
       'format': format,
     };
   }
@@ -209,7 +227,7 @@ class HijriMonth {
 class GregorianDate {
   final String date;
   final String day;
-  final String month;
+  final String month; // Month name (e.g., "January")
   final String year;
   final GregorianWeekday weekday;
   final String format;
@@ -227,7 +245,7 @@ class GregorianDate {
     return GregorianDate(
       date: json['date'] ?? '',
       day: json['day'] ?? '',
-      month: json['month']?['number']?.toString() ?? '',
+      month: json['month']?['en'] ?? json['month']?['number']?.toString() ?? '',
       year: json['year'] ?? '',
       weekday: GregorianWeekday.fromJson(json['weekday'] ?? {}),
       format: json['format'] ?? '',
@@ -238,7 +256,7 @@ class GregorianDate {
     return {
       'date': date,
       'day': day,
-      'month': month,
+      'month': {'en': month},
       'year': year,
       'weekday': weekday.toJson(),
       'format': format,

@@ -128,7 +128,35 @@ class StorageService {
   static Map<String, dynamic>? getCachedPrayerTimes() {
     final data = _cache.get(AppConstants.prayerTimesCacheKey);
     if (data == null) return null;
-    return Map<String, dynamic>.from(data);
+    // Deep convert from Map<dynamic, dynamic> to Map<String, dynamic>
+    return _deepConvertMap(data);
+  }
+
+  /// Deep convert nested maps to Map<String, dynamic>
+  static Map<String, dynamic> _deepConvertMap(dynamic data) {
+    if (data is Map) {
+      return data.map((key, value) {
+        if (value is Map) {
+          return MapEntry(key.toString(), _deepConvertMap(value));
+        } else if (value is List) {
+          return MapEntry(key.toString(), _deepConvertList(value));
+        }
+        return MapEntry(key.toString(), value);
+      });
+    }
+    return <String, dynamic>{};
+  }
+
+  /// Deep convert nested lists
+  static List<dynamic> _deepConvertList(List<dynamic> list) {
+    return list.map((item) {
+      if (item is Map) {
+        return _deepConvertMap(item);
+      } else if (item is List) {
+        return _deepConvertList(item);
+      }
+      return item;
+    }).toList();
   }
 
   /// Get last cache date

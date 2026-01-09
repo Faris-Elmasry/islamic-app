@@ -5,20 +5,29 @@ import 'package:flutter_application_6/core/services/storage_service.dart';
 import 'package:flutter_application_6/core/services/notification_service.dart';
 import 'package:flutter_application_6/core/services/audio_service.dart';
 import 'package:flutter_application_6/core/services/background_service.dart';
+import 'package:flutter_application_6/core/services/prayer_cache_service.dart';
 import 'package:flutter_application_6/veiw/mainpages/homepage1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize services
-  await StorageService.init();
-  await NotificationService.init();
-  await NotificationService.requestPermissions();
-  await AudioService.init();
-  await BackgroundService.init();
+  // Initialize services in parallel for faster startup
+  await Future.wait([
+    StorageService.init(),
+    NotificationService.init(),
+    AudioService.init(),
+  ]);
 
-  // Register background tasks
-  await BackgroundService.registerPrayerTimesSync();
+  // Initialize prayer cache (non-blocking)
+  PrayerCacheService.init();
+
+  // Request permissions (non-blocking)
+  NotificationService.requestPermissions();
+
+  // Background service can be deferred
+  BackgroundService.init().then((_) {
+    BackgroundService.registerPrayerTimesSync();
+  });
 
   runApp(const ProviderScope(child: MyApp()));
 }
